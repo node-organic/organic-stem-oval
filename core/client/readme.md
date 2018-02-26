@@ -13,18 +13,18 @@
 ```
 // some.index.bundle.js
 
-require('cell')({
-  root: '/dashboard',
-  urls: {
-    groupEdit: 'groups/:groupId/edit',
-    accountEdit: 'groups/:groupId/accounts/:accountId'
-  },
-  protected: true,
-  redirectNotAuthorized: 'login',
-  requireTags: function () {
-    require('./dashboard-view')
-  }
-})
+import Cell from 'cell'
+import './landing-view.tag'
+
+const DNA = {}
+const ORGANELLES = [
+  // { source: "client/plasma/organelle1" },
+  // { source: "client/plasma/organelle2" }
+]
+
+const MyAppIntance = new Cell(DNA)
+MyAppIntance.start(ORGANELLES)
+
 ```
 
 #### scoped class
