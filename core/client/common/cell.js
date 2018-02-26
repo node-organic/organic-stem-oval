@@ -1,33 +1,21 @@
 /* global oval */
-if (typeof Promise === 'undefined') {
-  require('es6-promise').polyfill()
-}
+import Plasma from 'organic-plasma'
 
-module.exports = function (options, dna) {
-  var _ = require('lodash')
-  var Plasma = require('organic-plasma')
+oval.init()
 
-  window.onerror = window.handleException = window.onerror
-  window.navigatePage = require('./navigate-page')
-
-  window.plasma = new Plasma()
-
-  window.plasma.debug = dna.debug
-
-  if (options.organelles) {
-    window.plasma.organelles = window.plasma.organelles.concat(options.organelles(window.plasma))
+export default class Cell {
+  constructor (dna) {
+    window.plasma = new Plasma()
+    window.dna = dna
   }
 
-  require('domready')(function () {
-    oval.init()
-    if (options.globalDirectives) {
-      var oldBaseTag = oval.BaseTag
-      oval.BaseTag = function (tag, tagName, rootEl, rootProps, rootAttributes) {
-        oldBaseTag(tag, tagName, rootEl, rootProps, rootAttributes)
-        tag.injectDirectives(options.globalDirectives)
-      }
-    }
-    options.requireTags()
-    oval.mountAll(document.body)
-  })
+  start (organelleClassMaps) {
+    window.dna.plasma.forEach((organelleDNA) => {
+      let Organelle = organelleClassMaps[organelleDNA.source]
+      window.plasma.organelles.push(new Organelle(plasma, organeleDNA))
+    })
+    require('domready')(() => {
+      oval.mountAll(document.body)
+    })
+  }
 }
