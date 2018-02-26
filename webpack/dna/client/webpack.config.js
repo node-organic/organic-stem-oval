@@ -16,7 +16,7 @@ module.exports = {
     extensions: ['.webpack.js', '.web.js', '.tag', '.js'],
     modules: [
       'client/common',
-      'node_modules',
+      'node_modules'
     ],
   },
   plugins: [
