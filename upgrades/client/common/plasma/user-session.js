@@ -25,7 +25,7 @@ class CookieStorage {
   }
 }
 
-class UserSession {
+export default class UserSession {
   constructor(plasma, dna) {
     let store = UserSession.getStore()
 
